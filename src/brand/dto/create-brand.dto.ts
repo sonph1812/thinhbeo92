@@ -20,29 +20,29 @@ export class CreateBrandDto {
   })
   name: string;
 
-  @ApiProperty({
-    description: 'ID of file',
-  })
-  @IsUUID()
-  @Validate(IsExist, ['FileEntity', 'id'], {
-    message: 'Image not exists',
-  })
-  @Validate(IsNotExistSub, ['Brand', 'id'], {
-    message: 'This logo is already use for another brand',
-  })
-  logo: string;
+  // @ApiProperty({
+  //   description: 'ID of file',
+  // })
+  // @IsUUID()
+  // @Validate(IsExist, ['FileEntity', 'id'], {
+  //   message: 'Image not exists',
+  // })
+  // @Validate(IsNotExistSub, ['Brand', 'id'], {
+  //   message: 'This logo is already use for another brand',
+  // })
+  // logo: string;
 
-  @ApiProperty({
-    description: 'ID of file',
-  })
-  @IsUUID()
-  @Validate(IsExist, ['FileEntity', 'id'], {
-    message: 'Image not exists',
-  })
-  @Validate(IsNotExistSub, ['Brand', 'id'], {
-    message: 'This image is already use for another brand',
-  })
-  image: string;
+  // @ApiProperty({
+  //   description: 'ID of file',
+  // })
+  // @IsUUID()
+  // @Validate(IsExist, ['FileEntity', 'id'], {
+  //   message: 'Image not exists',
+  // })
+  // @Validate(IsNotExistSub, ['Brand', 'id'], {
+  //   message: 'This image is already use for another brand',
+  // })
+  // image: string;
 
   @ApiProperty()
   @IsOptional()

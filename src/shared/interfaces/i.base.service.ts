@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EntityId } from 'typeorm/repository/EntityId';
 import { DeepPartial, DeleteResult, FindOptionsOrder } from 'typeorm';
-import { IPaginationOptions } from "../../utils/types/pagination-options";
-import { EntityCondition } from "../../utils/types/entity-condition.type";
+import { IPaginationOptions } from '../../utils/types/pagination-options';
+import { EntityCondition } from '../../utils/types/entity-condition.type';
 
 export interface IBaseService<T> {
   findManyWithPagination(

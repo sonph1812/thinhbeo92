@@ -55,7 +55,6 @@ export class ProductService extends BaseService<Product, Repository<Product>> {
       id: StatusEnum.active,
       name: 'Active',
     };
-    // console.log('tierModels', tierModels);
     const tierModelsPromise = tierModels.map(async (tier) => {
       let tierModelEntity = new TierModel();
       tierModelEntity.name = tier.tierModel as string;
@@ -78,7 +77,7 @@ export class ProductService extends BaseService<Product, Repository<Product>> {
         );
       }
 
-      // create model
+      //create model
       const modelPromises: Promise<Model>[] = tier.models?.map(
         (modelDto: CreateModelDto) => {
           const model = {
@@ -110,7 +109,7 @@ export class ProductService extends BaseService<Product, Repository<Product>> {
     });
 
     data.tierModels = await Promise.all(tierModelsPromise);
-    // find images
+    /*find images*/
     await Promise.all(
       data.images?.map((id) => {
         return this.fileService.findOne({ id });
@@ -122,7 +121,6 @@ export class ProductService extends BaseService<Product, Repository<Product>> {
   }
 
   async getOne(productId: number, userId: number): Promise<ProductResponseDto> {
-    console.log('userId', userId);
     //* get product
     const product = await super.findOne({ id: productId });
 
@@ -318,15 +316,15 @@ export class ProductService extends BaseService<Product, Repository<Product>> {
   }
 
   async getTopSearch(paginationOptions: IPaginationOptions) {
-    const wheres = {
-      status: {
-        id: 1,
-      },
-    };
+    // const wheres = {
+    //   status: {
+    //     id: 1,
+    //   },
+    // };
     let totalPages = 1;
     if (paginationOptions.limit) {
       const totalRows = await this.repository.count({
-        where: wheres,
+        // where: wheres,
       });
       totalPages = Math.ceil(totalRows / paginationOptions.limit);
     }
@@ -337,7 +335,7 @@ export class ProductService extends BaseService<Product, Repository<Product>> {
             skip: (paginationOptions.page - 1) * paginationOptions.limit,
           }),
         ...(paginationOptions.limit && { take: paginationOptions.limit }),
-        where: wheres,
+        // where: wheres,
         select: [
           'id',
           'name',
@@ -348,13 +346,21 @@ export class ProductService extends BaseService<Product, Repository<Product>> {
           'viewCount',
           'sold',
           'params',
+          'stock',
         ],
         order: {
           viewCount: 'DESC',
         },
         cache: true,
         loadEagerRelations: false,
-        relations: ['image'],
+        relations:
+          {
+          image:true,
+          brand:true,
+            categories:true,
+            images:true,
+            status:true
+        },
       }),
       totalPages,
       paginationOptions,
@@ -470,4 +476,10 @@ export class ProductService extends BaseService<Product, Repository<Product>> {
       paginationOptions,
     );
   }
+
+  async getAll() {
+    return await  this.productRepository.find()
+  }
+
+
 }

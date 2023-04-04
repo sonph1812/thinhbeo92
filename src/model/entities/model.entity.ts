@@ -35,8 +35,8 @@ export class Model extends EntityHelper {
   @Column({ default: 0 })
   sold?: number;
 
-  @Column()
-  image?: string;
+  // @Column({nullable:true})
+  // image?: string;
 
   @ManyToOne(() => Status, {
     eager: true,

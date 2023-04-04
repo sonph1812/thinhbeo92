@@ -93,7 +93,7 @@ export class User extends EntityHelper {
 
   @ManyToOne(() => Role, {
     eager: true,
-    nullable: true
+    nullable: true,
   })
   role?: Role | null;
 

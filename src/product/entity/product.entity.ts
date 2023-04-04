@@ -18,8 +18,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { FileEntity } from './../../files/entities/file.entity';
-import { EntityHelper } from './../../utils/entity-helper';
+import { FileEntity } from '../../files/entities/file.entity';
+import { EntityHelper } from '../../utils/entity-helper';
 
 @Entity()
 export class Product extends EntityHelper {
@@ -76,7 +76,7 @@ export class Product extends EntityHelper {
   discount?: number | null;
 
   @ApiProperty()
-  @Column({ default: 0 })
+  @Column({ type: "bigint", default: 0 })
   stock?: number;
 
   @ApiProperty()
@@ -96,15 +96,11 @@ export class Product extends EntityHelper {
   viewCount?: number | null;
 
   @ApiProperty()
-  @ManyToOne(() => Status, {
-    eager: true,
-  })
+  @ManyToOne(() => Status, (status) => status.id)
   status?: Status | number;
 
   @ApiProperty()
-  @ManyToOne(() => Categories, {
-    eager: true,
-  })
+  @ManyToOne(() => Categories, (cate) => cate.id)
   categories: Categories | number;
 
   @ApiProperty()

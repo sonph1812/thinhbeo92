@@ -12,9 +12,9 @@ import {
 } from 'typeorm';
 import { EntityId } from 'typeorm/repository/EntityId';
 import { IBaseService } from '../interfaces/i.base.service';
-import { IPaginationOptions } from "../../utils/types/pagination-options";
-import { EntityCondition } from "../../utils/types/entity-condition.type";
-import { infinityPagination } from "../../utils/infinity-pagination";
+import { IPaginationOptions } from '../../utils/types/pagination-options';
+import { EntityCondition } from '../../utils/types/entity-condition.type';
+import { infinityPagination } from '../../utils/infinity-pagination';
 
 export class BaseService<T extends BaseEntity, R extends Repository<T>>
   implements IBaseService<T>

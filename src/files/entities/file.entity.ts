@@ -17,6 +17,7 @@ export class FileEntity extends EntityHelper {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ApiProperty({ example: '/uploads/img.png' })
   @Allow()
   @Column()
   path: string;

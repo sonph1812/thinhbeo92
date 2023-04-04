@@ -22,11 +22,8 @@ import { UsersService } from 'src/users/users.service';
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private usersService: UsersService,
-    // private forgotService: ForgotService,
-    // private mailService: MailService,
+    private usersService: UsersService, // private forgotService: ForgotService, // private mailService: MailService,
   ) {}
-
 
   async validateLogin(
     loginDto: AuthEmailLoginDto,
@@ -238,7 +235,6 @@ export class AuthService {
     //     hash,
     //   },
     // });
-
     // if (!forgot) {
     //   throw new HttpException(
     //     {
@@ -250,7 +246,6 @@ export class AuthService {
     //     HttpStatus.UNPROCESSABLE_ENTITY,
     //   );
     // }
-
     // const user = forgot.user;
     // user.password = password;
     // await user.save();

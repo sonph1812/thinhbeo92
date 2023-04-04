@@ -23,12 +23,12 @@ export class CreateModelDto {
   @IsNumber()
   stock: number;
 
-  @ApiProperty()
-  @IsUUID()
-  @Validate(IsExist, ['FileEntity', 'id'], {
-    message: 'Image not exists',
-  })
-  image?: string;
+  // @ApiProperty()
+  // @IsUUID()
+  // @Validate(IsExist, ['FileEntity', 'id'], {
+  //   message: 'Image not exists',
+  // })
+  // image?: string;
 
   @ApiProperty()
   @IsOptional()

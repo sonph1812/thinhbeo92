@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { get, isEmpty, isNil, set } from 'lodash';
-import { PAYMENT_TYPE } from 'src/payments/payment.constant';
+// import { PAYMENT_TYPE } from 'src/payments/payment.constant';
 import { ProductService } from 'src/product/product.service';
 import { CartService } from 'src/cart/cart.service';
 import { BaseService } from 'src/shared/services/base.service';
@@ -117,7 +117,7 @@ export class OrdersService extends BaseService<Orders, Repository<Orders>> {
     createOrderDto.products = data.products;
     createOrderDto.address = data.address;
     createOrderDto.status = ORDER_TYPE.DELIVERING;
-    createOrderDto.paymentMethod = PAYMENT_TYPE.MOMO;
+    // createOrderDto.paymentMethod = PAYMENT_TYPE.MOMO;
     createOrderDto.createdBy = data.createdBy;
     //* create pending order
     const order = await this.createOrder(createOrderDto);

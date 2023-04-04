@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
   IsNotEmpty,
@@ -43,7 +43,7 @@ export class CreateProductDto {
   @IsString()
   description: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'ID of file',
     type: String,
   })
@@ -54,9 +54,10 @@ export class CreateProductDto {
   })
   image: FileEntity | string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'ID of file',
     type: [String],
+    required: false,
   })
   @IsNotEmpty()
   @IsArray()
