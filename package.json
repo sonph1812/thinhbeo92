@@ -6,10 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "typeorm:cli": "ts-node --project tsconfig-migration.json -r tsconfig-paths/register -r dotenv/config ./node_modules/typeorm/cli -d ./src/database/typeorm-migration.datasource.ts",
+    "typeorm:cli": "ts-node --project tsconfig-migration.json -r tsconfig-paths/register -r dotenv/config ./node_modules/typeorm/cli -d src/app-module/database/typeorm-migration.datasource.ts",
     "migration-generate": "cross-env MIGRATION=true npm run typeorm:cli --  migration:generate",
     "migration-create": "ts-node -r tsconfig-paths/register -r dotenv/config ./node_modules/typeorm/cli migration:create",
-    "seed:run": "ts-node -r tsconfig-paths/register ./src/database/seeds/run-seed.ts",
+    "seed:run": "ts-node -r tsconfig-paths/register src/app-module/database/seeds/run-seed.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",

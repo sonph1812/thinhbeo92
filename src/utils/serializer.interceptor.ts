@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import userResponseSerializer from 'src/users/user-response.serializer';
-import { User } from 'src/users/entities/user.entity';
+import userResponseSerializer from 'src/app-module/users/user-response.serializer';
 import deepMapObject from './deep-map-object';
+import { User } from "../common/entities/user.entity";
 
 @Injectable()
 export class SerializerInterceptor implements NestInterceptor {
