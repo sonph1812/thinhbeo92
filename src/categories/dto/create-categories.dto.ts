@@ -23,22 +23,22 @@ export class CreateCategoriesDto {
   })
   name: string;
 
-  @ApiProperty({
-    required: true,
-    description: 'ID of file',
-    example: 'a62cf20f-abe3-4de6-b486-1fd3982c52e9',
-  })
-  @IsUUID()
-  @Validate(IsExist, ['FileEntity', 'id'], {
-    message: 'Image not exists',
-  })
-  logo: string;
-
-  @ApiProperty({ type: Array<number>, example: [1, 2] })
-  @IsOptional()
-  @IsArray()
-  @IsNumber({}, { each: true })
-  banners: Banner[] | number[];
+  // @ApiProperty({
+  //   required: true,
+  //   description: 'ID of file',
+  //   example: 'a62cf20f-abe3-4de6-b486-1fd3982c52e9',
+  // })
+  // @IsUUID()
+  // @Validate(IsExist, ['FileEntity', 'id'], {
+  //   message: 'Image not exists',
+  // })
+  // logo: string;
+  //
+  // @ApiProperty({ type: Array<number>, example: [1, 2] })
+  // @IsOptional()
+  // @IsArray()
+  // @IsNumber({}, { each: true })
+  // banners: Banner[] | number[];
 
   @ApiProperty({
     description: 'ID of status',

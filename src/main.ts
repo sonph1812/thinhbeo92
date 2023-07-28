@@ -11,10 +11,11 @@ import validationOptions from './utils/validation-options';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  const configService = app.get(ConfigService);
 
   app.enableShutdownHooks();
   app.enableCors();
+  const configService = app.get<ConfigService>(ConfigService);
+
   app.setGlobalPrefix(configService.get('app.apiPrefix'), {
     exclude: ['/'],
   });
@@ -36,8 +37,5 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   await app.listen(process.env.PORT || 6886);
-  console.log(process.env.PORT);
 }
 void bootstrap();
-
-

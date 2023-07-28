@@ -22,11 +22,8 @@ import { UsersService } from 'src/users/users.service';
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private usersService: UsersService,
-    // private forgotService: ForgotService,
-    // private mailService: MailService,
+    private usersService: UsersService, // private forgotService: ForgotService, // private mailService: MailService,
   ) {}
-
 
   async validateLogin(
     loginDto: AuthEmailLoginDto,
@@ -35,23 +32,23 @@ export class AuthService {
     const user = await this.usersService.findOne({
       email: loginDto.email,
     });
-    if (
-      !user ||
-      (user &&
-        !(onlyAdmin ? [RoleEnum.admin] : [RoleEnum.user]).includes(
-          user.role.id,
-        ))
-    ) {
-      throw new HttpException(
-        {
-          status: HttpStatus.UNPROCESSABLE_ENTITY,
-          errors: {
-            email: 'Email not found',
-          },
-        },
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
+    // if (
+    //   !user ||
+    //   (user &&
+    //     // !(onlyAdmin ? [RoleEnum.admin] : [RoleEnum.user]).includes(
+    //     //   // user.role.id,
+    //     // ))
+    // ) {
+    //   throw new HttpException(
+    //     {
+    //       status: HttpStatus.UNPROCESSABLE_ENTITY,
+    //       errors: {
+    //         email: 'Email not found',
+    //       },
+    //     },
+    //     HttpStatus.UNPROCESSABLE_ENTITY,
+    //   );
+    // }
 
     if (user.provider !== AuthProvidersEnum.email) {
       throw new HttpException(
@@ -74,7 +71,7 @@ export class AuthService {
       const token = await this.jwtService.sign({
         id: user.id,
         email: user.email,
-        role: user.role,
+        // role: user.role,
         photo: user.photo,
         fullName: user.fullName,
       });
@@ -158,9 +155,9 @@ export class AuthService {
     const user = await this.usersService.create({
       ...dto,
       email: dto.email,
-      role: {
-        id: RoleEnum.user,
-      } as Role,
+      // role: {
+      //   id: RoleEnum.user,
+      // } as Role,
       // status: {
       //   id: StatusEnum.inactive,
       // } as Status,
@@ -238,7 +235,6 @@ export class AuthService {
     //     hash,
     //   },
     // });
-
     // if (!forgot) {
     //   throw new HttpException(
     //     {
@@ -250,7 +246,6 @@ export class AuthService {
     //     HttpStatus.UNPROCESSABLE_ENTITY,
     //   );
     // }
-
     // const user = forgot.user;
     // user.password = password;
     // await user.save();

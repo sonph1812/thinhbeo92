@@ -12,8 +12,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { FileEntity } from './../../files/entities/file.entity';
-import { Status } from './../../statuses/entities/status.entity';
+import { FileEntity } from '../../files/entities/file.entity';
+import { Status } from '../../statuses/entities/status.entity';
 
 @Entity()
 export class Brand extends EntityHelper {

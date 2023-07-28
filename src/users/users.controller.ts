@@ -23,7 +23,7 @@ import { RoleEnum } from 'src/roles/roles.enum';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/roles/roles.guard';
 import { User } from './entities/user.entity';
-import { EntityCondition } from "../utils/types/entity-condition.type";
+import { EntityCondition } from '../utils/types/entity-condition.type';
 
 @ApiBearerAuth()
 @Roles(RoleEnum.admin)

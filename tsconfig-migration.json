@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.json",
+    "files": [
+        "libs/**/*.ts",
+        "**/*.entity.ts",
+        "global.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "test",
+        "**/*spec.ts"
+    ]
+}

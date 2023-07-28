@@ -88,8 +88,11 @@ export class ProductController {
   }
 
   @Get('top-search')
-  @HttpCode(HttpStatus.OK)
-  topSearch(@Query('page') page: number, @Query('limit') limit: number) {
+  // @HttpCode(HttpStatus.OK)
+  topSearch(
+    @Query('page') page: number,
+    @Query('limit') limit: number
+  ) {
     if (limit > 50) {
       limit = 50;
     }
@@ -164,6 +167,7 @@ export class ProductController {
     return this.productService.like(get(request, 'user.id'), id);
   }
 
+
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.OK)
@@ -171,4 +175,6 @@ export class ProductController {
   unlike(@Request() request, @Param('id') id: number) {
     return this.productService.unlike(get(request, 'user.id'), id);
   }
+
+
 }
