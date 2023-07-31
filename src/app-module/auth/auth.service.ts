@@ -4,50 +4,31 @@ import * as bcrypt from 'bcryptjs';
 import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 import { AuthUpdateDto } from './dto/auth-update.dto';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
-import { RoleEnum } from 'src/app-module/roles/roles.enum';
 import { StatusEnum } from 'src/app-module/statuses/statuses.enum';
 import * as crypto from 'crypto';
 import { plainToClass } from 'class-transformer';
 import { AuthProvidersEnum } from './auth-providers.enum';
-// import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UsersService } from 'src/app-module/users/users.service';
 import { User } from "../../common/entities/user.entity";
 import { Status } from "../../common/entities/status.entity";
-// import { ForgotService } from 'src/forgot/forgot.service';
-// import { MailService } from 'src/mail/mail.service';
+import { MailService } from "../mail/mail.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private usersService: UsersService, // private forgotService: ForgotService, // private mailService: MailService,
+    private usersService: UsersService,
+    private mailService: MailService
   ) {}
 
   async validateLogin(
     loginDto: AuthEmailLoginDto,
     onlyAdmin: boolean,
-  ): Promise<{ token: string; user: User }> {
+  ): Promise<{ token: string }> {
     const user = await this.usersService.findOne({
       email: loginDto.email,
     });
-    // if (
-    //   !user ||
-    //   (user &&
-    //     // !(onlyAdmin ? [RoleEnum.admin] : [RoleEnum.user]).includes(
-    //     //   // user.role.id,
-    //     // ))
-    // ) {
-    //   throw new HttpException(
-    //     {
-    //       status: HttpStatus.UNPROCESSABLE_ENTITY,
-    //       errors: {
-    //         email: 'Email not found',
-    //       },
-    //     },
-    //     HttpStatus.UNPROCESSABLE_ENTITY,
-    //   );
-    // }
 
     if (user.provider !== AuthProvidersEnum.email) {
       throw new HttpException(
@@ -67,7 +48,7 @@ export class AuthService {
     );
 
     if (isValidPassword) {
-      const token = await this.jwtService.sign({
+      const token = this.jwtService.sign({
         id: user.id,
         email: user.email,
         // role: user.role,
@@ -75,7 +56,7 @@ export class AuthService {
         fullName: user.fullName,
       });
 
-      return { token, user: user };
+      return { token };
     } else {
       throw new HttpException(
         {
@@ -145,31 +126,28 @@ export class AuthService {
   //   };
   // }
 
-  async register(dto: AuthRegisterLoginDto): Promise<void> {
+  async register(dto: AuthRegisterLoginDto){
     const hash = crypto
       .createHash('sha256')
       .update(randomStringGenerator())
       .digest('hex');
 
-    const user = await this.usersService.create({
-      ...dto,
-      email: dto.email,
-      // role: {
-      //   id: RoleEnum.user,
-      // } as Role,
-      // status: {
-      //   id: StatusEnum.inactive,
-      // } as Status,
-      hash,
-    });
-    console.log(user);
-
-    // await this.mailService.userSignUp({
-    //   to: user.email,
-    //   data: {
-    //     hash,
-    //   },
+    // const user = await this.usersService.create({
+    //   ...dto,
+    //   email: dto.email,
+    //   role: {
+    //     id: RoleEnum.user,
+    //   } as Role,
+    //   status: {
+    //     id: StatusEnum.inactive,
+    //   } as Status,
+    //   hash,
     // });
+const user = dto.email
+    await this.mailService.sendUserConfirmation(user,hash);
+    // return await this.usersService.save(user)
+    return 'ok'
+
   }
 
   async confirmEmail(hash: string): Promise<void> {
@@ -198,6 +176,7 @@ export class AuthService {
     const user = await this.usersService.findOne({
       email,
     });
+    console.log(user);
 
     if (!user) {
       throw new HttpException(

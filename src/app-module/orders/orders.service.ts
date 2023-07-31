@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { get, isEmpty, isNil, set } from 'lodash';
-// import { PAYMENT_TYPE } from 'src/payments/payment.constant';
 import { ProductService } from 'src/app-module/product/product.service';
 import { CartService } from 'src/app-module/cart/cart.service';
 import { BaseService } from 'src/app-module/shared/services/base.service';

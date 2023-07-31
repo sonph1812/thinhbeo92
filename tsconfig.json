@@ -16,6 +16,40 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "paths": {
+      "@app/core": [
+        "libs/core/src"
+      ],
+      "@app/core/*": [
+        "libs/core/src/*"
+      ],
+      "@app/flow": [
+        "libs/flow/src"
+      ],
+      "@app/flow/*": [
+        "libs/flow/src/*"
+      ],
+      "@app/eth": [
+        "libs/eth/src"
+      ],
+      "@app/eth/*": [
+        "libs/eth/src/*"
+      ],
+      "@app/exceptions": [
+        "libs/exceptions/src"
+      ],
+      "@app/exceptions/*": [
+        "libs/exceptions/src/*"
+      ],
+      "@/indexer/*": [
+        "apps/indexer/src/*"
+      ],
+      "@/user/*": [
+        "apps/user-api/src/*"
+      ],
+    }
   }
 }
