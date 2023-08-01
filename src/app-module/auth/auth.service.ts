@@ -13,6 +13,8 @@ import { UsersService } from 'src/app-module/users/users.service';
 import { User } from "../../common/entities/user.entity";
 import { Status } from "../../common/entities/status.entity";
 import { MailService } from "../mail/mail.service";
+import { RoleEnum } from "../roles/roles.enum";
+import { Role } from "../../common/entities/role.entity";
 
 @Injectable()
 export class AuthService {
@@ -25,7 +27,7 @@ export class AuthService {
   async validateLogin(
     loginDto: AuthEmailLoginDto,
     onlyAdmin: boolean,
-  ): Promise<{ token: string }> {
+  ): Promise<{ token: string,user:User }> {
     const user = await this.usersService.findOne({
       email: loginDto.email,
     });
@@ -51,12 +53,12 @@ export class AuthService {
       const token = this.jwtService.sign({
         id: user.id,
         email: user.email,
-        // role: user.role,
+        role: user.role,
         photo: user.photo,
         fullName: user.fullName,
       });
 
-      return { token };
+      return { token, user };
     } else {
       throw new HttpException(
         {
@@ -132,21 +134,20 @@ export class AuthService {
       .update(randomStringGenerator())
       .digest('hex');
 
-    // const user = await this.usersService.create({
-    //   ...dto,
-    //   email: dto.email,
-    //   role: {
-    //     id: RoleEnum.user,
-    //   } as Role,
-    //   status: {
-    //     id: StatusEnum.inactive,
-    //   } as Status,
-    //   hash,
-    // });
-const user = dto.email
-    await this.mailService.sendUserConfirmation(user,hash);
-    // return await this.usersService.save(user)
-    return 'ok'
+    const user = await this.usersService.create({
+      ...dto,
+      email: dto.email,
+      fullName:dto.firstname + dto.lastname,
+      role: {
+        id: RoleEnum.user,
+      } as Role,
+      status: {
+        id: StatusEnum.inactive,
+      } as Status,
+      hash,
+    });
+    await this.mailService.sendUserConfirmation(dto.email,hash);
+    return user.save()
 
   }
 
@@ -176,7 +177,6 @@ const user = dto.email
     const user = await this.usersService.findOne({
       email,
     });
-    console.log(user);
 
     if (!user) {
       throw new HttpException(

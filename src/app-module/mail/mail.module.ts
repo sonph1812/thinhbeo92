@@ -11,9 +11,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     MailerModule.forRootAsync({
       useFactory: async (config: ConfigService) => ({
         transport: {
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure:true,
+          service: 'gmail',
           auth: {
             user: 'thinhshoes@gmail.com',
             pass: 'ibvqqfwrrevmtlew',
@@ -22,13 +20,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         defaults: {
           from: `"No Reply" <${config.get('MAIL_FROM')}>`,
         },
-        // template: {
-        //   // dir: join(__dirname, 'templates'),
-        //   // adapter: new HandlebarsAdapter(),
-        //   // options: {
-        //   //   strict: true,
-        //   // },
-        // },
+        template: {
+          dir: join(process.cwd(),'dist/app-module/mail', 'template'),
+          adapter: new HandlebarsAdapter(),
+        },
       }),
       inject: [ConfigService],
     }),
@@ -37,3 +32,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   exports: [MailService],
 })
 export class MailModule {}
+
